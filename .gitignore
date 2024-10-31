@@ -11,6 +11,7 @@ env.bak/
 venv.bak/
 Scripts/
 Lib/
+include/
 
 # Alembic
 src/alembic.ini

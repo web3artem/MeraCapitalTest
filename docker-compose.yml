@@ -1,4 +1,15 @@
 services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    command: >
+      bash -c "sleep 3 && alembic upgrade head && uvicorn src.main:app --host 0.0.0.0 --port 8000"
+    restart: always
+    env_file:
+      - .env
   db:
     container_name: "db"
     image: postgres:15.6-alpine3.18
