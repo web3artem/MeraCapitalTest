@@ -10,6 +10,7 @@ TG - @artemcringe
 ## Установка
 ```shell
 git clone https://github.com/web3artem/MeraCapitalTest.git
+cd MeraCapitalTest
 ```
 
 ## Запуск приложения
