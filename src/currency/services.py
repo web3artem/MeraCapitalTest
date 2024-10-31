@@ -2,6 +2,7 @@ from sqlalchemy import select, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .models import Currency
+from .schemas import GetCurrencyResponse, LastCurrencyResponse, CurrencyPriceByDateResponse
 
 
 class CurrencyService:
@@ -13,7 +14,10 @@ class CurrencyService:
         query = select(Currency).where(Currency.ticker == ticker)
         res = await self.db.execute(query)
         ticker_data = res.scalars().all()
-        return ticker_data
+        data = [GetCurrencyResponse(ticker=instance.ticker,
+                                    price=instance.price,
+                                    updated_at=instance.updated_at) for instance in ticker_data]
+        return data
 
     async def get_last_currency_price(self, ticker: str):
         """Получение последней цены тикера"""
@@ -25,18 +29,20 @@ class CurrencyService:
         )
         res = await self.db.execute(query)
         latest_currency = res.scalars().first()
-        return latest_currency
+        return LastCurrencyResponse(ticker=latest_currency.ticker,
+                                    price=latest_currency.price)
 
     async def get_currency_price_by_date(self, ticker: str, start_date: int, end_date: int):
         """Получение цены валюты в диапазоне от start_date до end_date"""
-        print(start_date, "дата начала")
-        print(end_date, "дата окончания")
-        query =(
+        query = (
             select(Currency)
             .where(Currency.ticker == ticker,
                    and_(Currency.updated_at >= start_date,
                         Currency.updated_at <= end_date))
         )
         res = await self.db.execute(query)
-        filtered_data = res.scalars().all()
-        return filtered_data
+        currency_instances = res.scalars().all()
+        data = [CurrencyPriceByDateResponse(ticker=instance.ticker,
+                                            price=instance.price,
+                                            updated_at=instance.updated_at) for instance in currency_instances]
+        return data

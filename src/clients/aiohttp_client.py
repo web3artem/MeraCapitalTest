@@ -1,10 +1,11 @@
 import ssl
 from typing import Any
+from pip._vendor import certifi
 
 import aiohttp
 from aiohttp import TCPConnector, ClientResponseError
-from logger import logger
-from pip._vendor import certifi
+
+from src.logger import logger
 
 
 class AioHTTPClient:

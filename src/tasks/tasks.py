@@ -1,12 +1,13 @@
-import asyncio
 import time
 
-from aiohttp import ClientError
-from clients.aiohttp_client import AioHTTPClient
-from currency.models import Currency
-from deribitAPI.api import DeribitAPI
-from logger import logger
+import asyncio
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from aiohttp import ClientError
+from src.clients.aiohttp_client import AioHTTPClient
+from src.currency.models import Currency
+from src.deribitAPI.api import DeribitAPI
+from src.logger import logger
 
 
 async def get_price(db: AsyncSession):
@@ -14,7 +15,7 @@ async def get_price(db: AsyncSession):
     api = DeribitAPI(client)
 
     try:
-        for i in range(3):
+        for i in range(5):
             try:
                 btc_usd = await api.get_instrument("BTC_USDT")
                 eth_usd = await api.get_instrument("ETH_USDT")

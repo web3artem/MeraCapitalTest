@@ -9,7 +9,7 @@ from src.config import settings
 
 class Database:
     def __init__(self):
-        self.async_engine = create_async_engine(settings.ASYNC_DATABASE_URL, echo=True)
+        self.async_engine = create_async_engine(settings.ASYNC_DATABASE_URL)
         self.async_sessionmaker = async_sessionmaker(self.async_engine, class_=AsyncSession, expire_on_commit=False)
 
     async def get_async_session(self) -> Generator[AsyncSession, None, None]:

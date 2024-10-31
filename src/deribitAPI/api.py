@@ -1,4 +1,4 @@
-from logger import logger
+from src.logger import logger
 from src.clients.aiohttp_client import AioHTTPClient
 from aiohttp import ClientSession
 

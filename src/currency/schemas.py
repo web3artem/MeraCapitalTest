@@ -1,17 +1,17 @@
 from pydantic import BaseModel
 
-class CurrencySchema(BaseModel):
+class GetCurrencyResponse(BaseModel):
     ticker: str
     price: float
     updated_at: int
 
 
-class LastCurrencyPrice(BaseModel):
+class LastCurrencyResponse(BaseModel):
     ticker: str
     price: float
 
 
-class CurrencyPriceByDate(BaseModel):
+class CurrencyPriceByDateResponse(BaseModel):
     ticker: str
     price: float
     updated_at: int
