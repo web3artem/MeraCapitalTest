@@ -15,7 +15,7 @@ async def get_price(db: AsyncSession):
     api = DeribitAPI(client)
 
     try:
-        for i in range(5):
+        while True:
             try:
                 btc_usd = await api.get_instrument("BTC_USDT")
                 eth_usd = await api.get_instrument("ETH_USDT")
@@ -42,6 +42,6 @@ async def get_price(db: AsyncSession):
                 logger.error(f"Ошибка при получении данных из api: {e}")
             except Exception as e:
                 logger.error(f"Неизвестная ошибка {e}")
-            await asyncio.sleep(10)
+            await asyncio.sleep(60)
     finally:
         await client.close()
